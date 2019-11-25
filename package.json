@@ -1,0 +1,23 @@
+{
+  "name": "mongoscrap",
+  "version": "1.0.0",
+  "description": "This app scrapes eurosport.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olive89aja/mongoscrap.git"
+  },
+  "keywords": [
+    "mongoDB",
+    "scraping"
+  ],
+  "author": "OA",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/olive89aja/mongoscrap/issues"
+  },
+  "homepage": "https://github.com/olive89aja/mongoscrap#readme"
+}
