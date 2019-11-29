@@ -20,7 +20,7 @@ router.get("/getnews", function(req, res) {
     var $ = cheerio.load(html);
     var titlesArray = [];
 
-    $("div").each(function(i, element) {
+    $(".storylist-container").each(function(i, element) {
       var result = {};
 
       result.title = $(this)
@@ -80,7 +80,7 @@ router.get("/articles-json", function(req, res) {
   });
 });
 
-router.get("/clearAll", function(req, res) {
+router.get("/cleararticles", function(req, res) {
   Article.remove({}, function(err, doc) {
     if (err) {
       console.log(err);
