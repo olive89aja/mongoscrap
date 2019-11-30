@@ -26,11 +26,19 @@ router.get("/getnews", function(req, res) {
       result.title = $(this)
         .children("a")
         .text();
-      result.link = $(this)
+      
+      //Adding eurosport.com url in front of every article link to be able to serve each article
+      //with handlebars. 
+      
+        result.link = "https://www.eurosport.com" + $(this)
         .children("a")
         .attr("href");
 
+
       if (result.title !== "" && result.link !== "") {
+      
+      //if (result.link.includes(video) =>result.link.hide())
+      
         if (titlesArray.indexOf(result.title) == -1) {
           titlesArray.push(result.title);
 
