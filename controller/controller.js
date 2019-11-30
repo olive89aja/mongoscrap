@@ -3,7 +3,6 @@
 
 var express = require("express");
 var router = express.Router();
-var path = require("path");
 
 var request = require("request");
 var cheerio = require("cheerio");
@@ -15,12 +14,13 @@ router.get("/", function(req, res) {
   res.redirect("/articles");
 });
 
+
 router.get("/getnews", function(req, res) {
   request("https://www.eurosport.com/", function(error, response, html) {
     var $ = cheerio.load(html);
     var titlesArray = [];
 
-    $(".storylist-container").each(function(i, element) {
+    $("div").each(function(i, element) {
       var result = {};
 
       result.title = $(this)
@@ -57,6 +57,8 @@ router.get("/getnews", function(req, res) {
     res.redirect("/");
   });
 });
+
+
 router.get("/articles", function(req, res) {
   Article.find()
     .sort({ _id: -1 })
@@ -90,38 +92,66 @@ router.get("/cleararticles", function(req, res) {
   });
   res.redirect("/articles-json");
 });
+ //app.get("/articles/:id", function(req, res) {
+// Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+//   db.Article.findOne({ _id: req.params.id })
+//     // ..and populate all of the notes associated with it
+//     .populate("note")
+//     .then(function(dbArticle) {
+//       // If we were able to successfully find an Article with the given id, send it back to the client
+//       res.json(dbArticle);
+//     })
+//     .catch(function(err) {
+//       // If an error occurred, send it to the client
+//       res.json(err);
+//     });
+// });
+// router.get("/readArticle/:id", function(req, res) {
+//   var articleId = req.params.id;
+//   var hbsObj = {
+//     article: [],
+//     body: []
+//   };
 
-router.get("/readArticle/:id", function(req, res) {
-  var articleId = req.params.id;
-  var hbsObj = {
-    article: [],
-    body: []
-  };
+//   Article.findOne({ _id: articleId })
+//     .populate("note")
+//     .exec(function(err, doc) {
+//       if (err) {
+//         console.log("Error: " + err);
+//       } else {
+//         hbsObj.article = doc;
+//         var link = doc.link;
+//         request(link, function(error, response, html) {
+//           var $ = cheerio.load(response.data);
 
-  Article.findOne({ _id: articleId })
-    .populate("note")
-    .exec(function(err, doc) {
-      if (err) {
-        console.log("Error: " + err);
-      } else {
-        hbsObj.article = doc;
-        var link = doc.link;
-        request(link, function(error, response, html) {
-          var $ = cheerio.load(html);
+//           $(".storyfull__content").each(function(i, element) {
+//             hbsObj.body = $(this)
+//               .children(".storyfull__teaser")
+//               .children("storyfull__paragraphs")
+//               .text();
 
-          $(".div").each(function(i, element) {
-            hbsObj.body = $(this)
-              .children("h1")
-              .children("p")
-              .text();
+//             res.render("article", hbsObj);
+//             return false;
+//           });
+//         });
+//       }
+//     });
+// });
 
-            res.render("article", hbsObj);
-            return false;
-          });
-        });
-      }
-    });
+router.get("articles/:id", (req, res) => {
+  // query that finds the matching one in our db
+  db.Article.findOne({ _id: req.params.id })
+  // ..and populate all of the notes associated with it
+  .populate("note")
+  .then((dbArticle) => {
+    // If we were able to successfully find an Article with the given id, send it back to the client
+    res.json(dbArticle);
+  })
+  .catch((err) => {
+    res.json(err);
+  })
 });
+
 router.post("/note/:id", function(req, res) {
   var user = req.body.name;
   var content = req.body.comment;
