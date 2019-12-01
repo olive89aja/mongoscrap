@@ -26,7 +26,7 @@ router.get("/getnews", function(req, res) {
     var $ = cheerio.load(html);
     var titlesArray = [];
 
-    $("div").each(function(i, element) {
+    $(".storylist-container-latest").each(function(i, element) {
       var result = {};
 
       result.title = $(this)
@@ -40,10 +40,6 @@ router.get("/getnews", function(req, res) {
         .children("a")
         .attr("href");
 
-
-      if (result.title !== "" && result.link !== "") {
-      
-      //if (result.link.includes(video) =>result.link.hide())
       
         if (titlesArray.indexOf(result.title) == -1) {
           titlesArray.push(result.title);
@@ -63,7 +59,7 @@ router.get("/getnews", function(req, res) {
           });
         } 
       } 
-    });
+    );
     res.redirect("/");
   });
 });
