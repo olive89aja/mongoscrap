@@ -20,13 +20,12 @@ router.get("/", function(req, res) {
 });
 
 //This block of code powers the main functionnality of the app which is scraping news from eurosport.com
-
 router.get("/getnews", function(req, res) {
   request("https://www.eurosport.com/", function(error, response, html) {
     var $ = cheerio.load(html);
     var titlesArray = [];
 
-    $(".storylist-container__main-title").each(function(i, element) {
+    $("div").each(function(i, element) {
       var result = {};
 
       result.title = $(this)
@@ -40,6 +39,10 @@ router.get("/getnews", function(req, res) {
         .children("a")
         .attr("href");
 
+
+      if (result.title !== "" && result.link !== "") {
+      
+      //if (result.link.includes(video) =>result.link.hide())
       
         if (titlesArray.indexOf(result.title) == -1) {
           titlesArray.push(result.title);
@@ -59,11 +62,10 @@ router.get("/getnews", function(req, res) {
           });
         } 
       } 
-    );
+    });
     res.redirect("/");
   });
 });
-
 
 router.get("/articles", function(req, res) {
   Article.find()
