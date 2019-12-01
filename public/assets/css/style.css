@@ -1,13 +1,16 @@
 body {
 width:600px;
-
+background-color:yellow;
 }
 
 .nav {
-    color:yellow
+    width:600px;
+    color:blue;
 }
 
 p {
+    width:200px;
     color: green;
+    
 }
 
