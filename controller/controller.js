@@ -40,7 +40,7 @@ router.get("/getnews", function(req, res) {
         .attr("href");
 
 
-      if (result.title.length>20 && result.link !== "") {
+      if (result.title.length>30 && result.link !== "") {
       
       //if (result.link.includes(video) =>result.link.hide())
       
