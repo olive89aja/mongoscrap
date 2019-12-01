@@ -13,8 +13,10 @@ app.use(
   })
 );
 
+//Handlebars are used to generate html dynamically
+
 app.use(express.static(process.cwd() + "/public"));
-//Require set up handlebars
+
 var exphbs = require("express-handlebars");
 app.engine(
   "handlebars",
@@ -25,7 +27,7 @@ app.engine(
 app.set("view engine", "handlebars");
 
 //connecting to MongoDB
-//mongoose.connect("mongodb://localhost/scraped_news");
+//Here, we use the data from the mongolab addon in Heroku. 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb:@ds251158.mlab.com:51158/heroku_mp3v8gbl";
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });

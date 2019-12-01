@@ -1,12 +1,17 @@
-//The whole homework is strongly inspired by https://github.com/Dcoxmen/scraper_news
+//The homework is strongly inspired by activity 20 from week 18. 
+//These github repositories have also helped me:
+//https://github.com/Dcoxmen/scraper_news
+//https://github.com/CavanWagg/mongoose-news-scraper
+//https://github.com/tomtom28/mongodb-web-scraper
 
-
+//Let's require the packages that we need for our controller to run
 var express = require("express");
 var router = express.Router();
 var path = require("path");
 var request = require("request");
 var cheerio = require("cheerio");
 
+//These belong to the models folder
 var Note = require("../models/Note.js");
 var Article = require("../models/Article.js");
 
@@ -14,6 +19,7 @@ router.get("/", function(req, res) {
   res.redirect("/articles");
 });
 
+//This block of code powers the main functionnality of the app which is scraping news from eurosport.com
 
 router.get("/getnews", function(req, res) {
   request("https://www.eurosport.com/", function(error, response, html) {
@@ -55,12 +61,8 @@ router.get("/getnews", function(req, res) {
               });
             }
           });
-        } else {
-          console.log("Article already exists.");
-        }
-      } else {
-        console.log("Not saved to DB, missing data");
-      }
+        } 
+      } 
     });
     res.redirect("/");
   });
@@ -100,65 +102,23 @@ router.get("/cleararticles", function(req, res) {
   });
   res.redirect("/articles-json");
 });
- //app.get("/articles/:id", function(req, res) {
-// Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-//   db.Article.findOne({ _id: req.params.id })
-//     // ..and populate all of the notes associated with it
-//     .populate("note")
-//     .then(function(dbArticle) {
-//       // If we were able to successfully find an Article with the given id, send it back to the client
-//       res.json(dbArticle);
-//     })
-//     .catch(function(err) {
-//       // If an error occurred, send it to the client
-//       res.json(err);
-//     });
-// });
-// router.get("/readArticle/:id", function(req, res) {
-//   var articleId = req.params.id;
-//   var hbsObj = {
-//     article: [],
-//     body: []
-//   };
 
-//   Article.findOne({ _id: articleId })
-//     .populate("note")
-//     .exec(function(err, doc) {
-//       if (err) {
-//         console.log("Error: " + err);
-//       } else {
-//         hbsObj.article = doc;
-//         var link = doc.link;
-//         request(link, function(error, response, html) {
-//           var $ = cheerio.load(response.data);
-
-//           $(".storyfull__content").each(function(i, element) {
-//             hbsObj.body = $(this)
-//               .children(".storyfull__teaser")
-//               .children("storyfull__paragraphs")
-//               .text();
-
-//             res.render("article", hbsObj);
-//             return false;
-//           });
-//         });
-//       }
-//     });
-// });
+//This block of code allows us to find each article
 
 router.get("articles/:id", (req, res) => {
-  // query that finds the matching one in our db
+  
   db.Article.findOne({ _id: req.params.id })
-  // ..and populate all of the notes associated with it
+  
   .populate("note")
   .then((dbArticle) => {
-    // If we were able to successfully find an Article with the given id, send it back to the client
     res.json(dbArticle);
   })
   .catch((err) => {
     res.json(err);
   })
 });
+
+//This functionnality doesn't appear in the UI for now
 
 router.post("/note/:id", function(req, res) {
   var user = req.body.name;
