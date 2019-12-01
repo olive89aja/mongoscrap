@@ -25,7 +25,7 @@ router.get("/getnews", function(req, res) {
     var $ = cheerio.load(html);
     var titlesArray = [];
 
-    $(".storylist-latest__main-title None").each(function(i, element) {
+    $(".div").each(function(i, element) {
       var result = {};
 
       result.title = $(this)
