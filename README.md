@@ -12,12 +12,13 @@ MongoDB
 MongoLab
 Handlebars
 
-How to Use
+## How to Use
 
 From this url : https://desolate-brushlands-46712.herokuapp.com/articles 
 Click on Clear Articles to start fresh and click on get news to get the latest sports news.  
 
-Future Improvements
+## Future Improvements
+
 For the next version:
 
 Users should be able to leave comments and delete them.
